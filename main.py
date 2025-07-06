@@ -85,6 +85,7 @@ if st.button("Revisar cursos"):
         c = canvas_request("get", f"/courses/{cid}")
         if c is None:
             rows.append({
+                "ID":                cid,
                 "Diplomado":        "Error al cargar",
                 "SIS ID":           "",
                 "Course Code":      "",
@@ -113,6 +114,7 @@ if st.button("Revisar cursos"):
         end_str   = dt_end.strftime("%d-%m-%Y")   if dt_end   else "No configurada"
 
         rows.append({
+            "ID":                cid,
             "Diplomado":        diplom,
             "SIS ID":           sis_id,
             "Course Code":      code,
@@ -177,12 +179,12 @@ if st.button("Revisar cursos"):
     df["Estado Aprox."]  = df["Cierre Aprox."].apply(lambda x: estado(x, na="Error"))
     df["Estado Oficial"] = df["Cierre Oficial"].apply(lambda x: estado(x, na="No aplica"))
 
-    # — Ordenar por Diplomado y Curso_Num, luego elegir columnas finales —
+    # — Ordenar y mostrar sólo columnas deseadas —
     final_cols = [
-        "Diplomado", "SIS ID", "Course Code", "Nombre del curso",
+        "ID", "Diplomado","Nombre del curso",
         "F. Inicio", "F. Término",
         "Cierre Aprox.", "Estado Aprox.",
-        "Cierre Oficial", "Estado Oficial"
+        "Cierre Oficial", "Estado Oficial", "SIS ID", "Course Code"
     ]
     df = df.sort_values(["Diplomado", "Curso_Num"], na_position="last")[final_cols]
 
