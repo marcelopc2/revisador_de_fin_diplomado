@@ -1,0 +1,1 @@
+Analiza las rubricas de las tareas y ve si los puntajes corresponden.
